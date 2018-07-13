@@ -463,6 +463,10 @@ ifeq ($(TARGET_ARCH),csky)
 	CPU_CFLAGS-$(ARCH_BIG_ENDIAN)		+= -mbig-endian
 endif
 
+ifeq ($(TARGET_ARCH),k1c)
+	CPU_CFLAGS-$(CONFIG_K1C) += -march=k1c
+endif
+
 ifeq ($(TARGET_ARCH),m68k)
 	# -fPIC is only supported for 68020 and above.  It is not supported
 	# for 68000, 68010, or Coldfire.
