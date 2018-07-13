@@ -1252,6 +1252,72 @@ typedef struct
 #define ELF64_M_SIZE(info)	ELF32_M_SIZE (info)
 #define ELF64_M_INFO(sym, size)	ELF32_M_INFO (sym, size)
 
+/* K1C relocs */
+#define R_K1_NONE                                   0
+#define R_K1_16                                     1
+#define R_K1_32                                     2
+#define R_K1_64                                     3
+#define R_K1_17_PCREL                               4
+#define R_K1_27_PCREL                               5
+#define R_K1_32_PCREL                               6
+#define R_K1_64_PCREL                               7
+#define R_K1_S32_LO5                                8
+#define R_K1_S32_UP27                               9
+#define R_K1_S37_LO10                              10
+#define R_K1_S37_UP27                              11
+#define R_K1_S37_TPREL_LO10                        12
+#define R_K1_S37_TPREL_UP27                        13
+#define R_K1_TPREL_32                              14
+#define R_K1_TPREL64_64                            15
+#define R_K1_S37_GOTOFF_LO10                       16
+#define R_K1_S37_GOTOFF_UP27                       17
+#define R_K1_S43_GOTOFF64_LO10                     18
+#define R_K1_S43_GOTOFF64_UP27                     19
+#define R_K1_S43_GOTOFF64_EX6                      20
+#define R_K1_S37_GOT_LO10                          21
+#define R_K1_S37_GOT_UP27                          22
+#define R_K1_GLOB_DAT                              23
+#define R_K1_GLOB_DAT64                            24
+#define R_K1_S37_PLT_LO10                          25
+#define R_K1_S37_PLT_UP27                          26
+#define R_K1_GOTOFF                                27
+#define R_K1_GOTOFF64                              28
+#define R_K1_GOT                                   29
+#define R_K1_GOT64                                 30
+#define R_K1_COPY                                  31
+#define R_K1_COPY64                                32
+#define R_K1_JMP_SLOT                              33
+#define R_K1_JMP_SLOT64                            34
+#define R_K1_RELATIVE                              35
+#define R_K1_RELATIVE64                            36
+#define R_K1_S43_LO10                              37
+#define R_K1_S43_UP27                              38
+#define R_K1_S43_EX6                               39
+#define R_K1_S43_TPREL64_LO10                      40
+#define R_K1_S43_TPREL64_UP27                      41
+#define R_K1_S43_TPREL64_EX6                       42
+#define R_K1_S43_GOT64_LO10                        43
+#define R_K1_S43_GOT64_UP27                        44
+#define R_K1_S43_GOT64_EX6                         45
+#define R_K1_S43_PLT64_LO10                        46
+#define R_K1_S43_PLT64_UP27                        47
+#define R_K1_S43_PLT64_EX6                         48
+#define R_K1_S64_LO10                              49
+#define R_K1_S64_UP27                              50
+#define R_K1_S64_EX27                              51
+#define R_K1_S64_TPREL64_LO10                      52
+#define R_K1_S64_TPREL64_UP27                      53
+#define R_K1_S64_TPREL64_EX27                      54
+#define R_K1_S37_GOTADDR_LO10                      55
+#define R_K1_S37_GOTADDR_UP27                      56
+#define R_K1_S43_GOTADDR_LO10                      57
+#define R_K1_S43_GOTADDR_UP27                      58
+#define R_K1_S43_GOTADDR_EX6                       59
+#define R_K1_S64_GOTADDR_LO10                      60
+#define R_K1_S64_GOTADDR_UP27                      61
+#define R_K1_S64_GOTADDR_EX27                      62
+
+
 /* C-SKY relocs. */
 
 #define R_CKCORE_NONE               0
