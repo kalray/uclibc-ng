@@ -5,11 +5,9 @@
 #ifndef _BITS_UCLIBC_ARCH_FEATURES_H
 #define _BITS_UCLIBC_ARCH_FEATURES_H
 
-#error "You should copy this to your arch/bits/ dir and customize"
-
 /* instruction used when calling abort() to kill yourself */
 /*#define __UCLIBC_ABORT_INSTRUCTION__ "asm instruction"*/
-#undef __UCLIBC_ABORT_INSTRUCTION__
+#define __UCLIBC_ABORT_INSTRUCTION__ "errop\n\t;;\n"
 
 /* can your target use syscall6() for mmap ? */
 #undef __UCLIBC_MMAP_HAS_6_ARGS__
