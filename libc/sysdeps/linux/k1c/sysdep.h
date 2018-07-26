@@ -6,8 +6,11 @@
  * Copyright (C) 2018 Kalray Inc.
  */
 
-#ifndef _ENDIAN_H
-# error "Never use <bits/endian.h> directly; include <endian.h> instead."
-#endif
+#ifndef _LINUX_K1C_SYSDEP_H
+#define _LINUX_K1C_SYSDEP_H 1
 
-#define __BYTE_ORDER __LITTLE_ENDIAN
+#include <common/sysdep.h>
+
+#define SYS_ify(syscall_name)  (__NR_##syscall_name)
+
+#endif //_LINUX_K1C_SYSDEP_H
