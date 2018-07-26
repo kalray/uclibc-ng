@@ -22,11 +22,7 @@
 #ifndef _STACKINFO_H
 #define _STACKINFO_H	1
 
-#error Machine stack direction unknown.
-#if 0
 #define _STACK_GROWS_DOWN	1
-#define _STACK_GROWS_UP		1
-#endif
 
 #endif	/* stackinfo.h */
 

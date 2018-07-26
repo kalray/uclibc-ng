@@ -1,6 +1,9 @@
-#error "This file must be written based on the data type sizes of the target"
+/*
+ * This file is subject to the terms and conditions of the GNU General Public
+ * License.  See the file "COPYING" in the main directory of this archive
+ * for more details.
+ *
+ * Copyright (C) 2018 Kalray Inc.
+ */
 
-#if 0
-#define __WORDSIZE 32
 #define __WORDSIZE 64
-#endif
