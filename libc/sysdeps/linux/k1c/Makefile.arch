@@ -5,5 +5,5 @@
 # Licensed under the LGPL v2.1, see the file COPYING.LIB in this tarball.
 #
 
-CSRC-y :=
-SSRC-y :=
+CSRC-y := 
+SSRC-y := setjmp.S bsd-setjmp.S bsd-_setjmp.S __longjmp.S
