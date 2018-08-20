@@ -35,6 +35,11 @@ C_SYMBOL_NAME(name):		   	 \
 
 #endif
 
+/* Local label name for asm code.  */
+# ifndef L
+#  define L(name) $L##name
+# endif
+
 #undef END
 #define END(name) \
   cfi_endproc;        \
