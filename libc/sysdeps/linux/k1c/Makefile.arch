@@ -6,4 +6,4 @@
 #
 
 CSRC-y := 
-SSRC-y := setjmp.S bsd-setjmp.S bsd-_setjmp.S __longjmp.S clone.S
+SSRC-y := setjmp.S bsd-setjmp.S bsd-_setjmp.S __longjmp.S clone.S vfork.S
