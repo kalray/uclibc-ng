@@ -58,9 +58,8 @@ C_SYMBOL_NAME(_start):
 	set $cs = $r8
 	/* FIXME: clear frame pointer when format has been clarified */
 	;;
-	/* FIXME: enable UCLIBC_CTOR_DTOR in config and set these */
-	make $r3 = 0 /* _init */
-	make $r4 = 0 /* _fini */
+	make $r3 = _init
+	make $r4 = _fini
 	make $r0 = main
 	goto __uClibc_main
 	;;
