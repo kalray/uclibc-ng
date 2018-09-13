@@ -51,6 +51,7 @@ C_SYMBOL_NAME(_start):
 	/* Align stack */
 	andd $sp = $sp, $r0
 	make $r8 = 0
+	make $fp = 0;
 	;;
 	/* Setup stack_end for __uClibc_main */
 	copyd $r6 = $sp
