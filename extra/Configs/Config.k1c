@@ -14,3 +14,5 @@ config FORCE_OPTIONS_FOR_ARCH
         select ARCH_HAS_MMU
 	select ARCH_HAS_NO_SHARED
 	select ARCH_HAS_NO_LDSO
+	select UCLIBC_HAS_FPU
+	select DO_C99_MATH
