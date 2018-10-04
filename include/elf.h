@@ -271,6 +271,7 @@ typedef struct
 #define EM_AARCH64	183		/* ARM AARCH64 */
 #define EM_MICROBLAZE	189		/* Xilinx Microblaze */
 #define EM_ARCV2	195		/* ARCv2 Cores */
+#define EM_K1 0x1337
 
 /* NEXT FREE NUMBER: Increment this after adding your official arch number */
 #define EM_NUM		196
