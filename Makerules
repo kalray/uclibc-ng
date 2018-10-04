@@ -191,7 +191,10 @@ ver_disp_hcompile.u= echo '$(call esc,$(cmd_hcompile.u))'
 ver_disp_hcompile.o= echo '$(call esc,$(cmd_hcompile.o))'
 ver_disp_strip     = echo '$(call esc,$(cmd_strip))'
 ver_disp_t_strip   = echo '$(call esc,$(cmd_t_strip))'
-ver_disp_ar        = echo '$(call esc,$(cmd_ar))'
+
+# Workaround : command line argument list generated is too long. Do not expand it.
+#ver_disp_ar        = echo '$(call esc,$(cmd_ar))'
+ver_disp_ar        = echo
 ver_disp_ld        =
 ver_disp_ln        =
 ver_disp_mkdir     =
@@ -273,7 +276,17 @@ cmd_compile.mi= $(cmd_compile.m:-c=-E -dD) $(UCLIBC_EXTRA_CPPFLAGS)
 cmd_compile-m = $(CC) $^ -c -o $@ $(CFLAGS) $(CFLAGS-$(suffix $@)) $(CFLAGS-$(notdir $(@D))) $(CFLAGS-$(notdir $@)) $(sort $(foreach d,$(^:$(top_srcdir)=),$(collect_multi_flags)))
 cmd_strip     = $(STRIPTOOL) $(STRIP_FLAGS) $^
 cmd_t_strip   = $(STRIPTOOL) $(STRIP_FLAGS) $@
-cmd_ar        = $(AR) $(ARFLAGS) $@ $(call objects_with_syms,,$^)
+
+# Workaround : command line argument list generated is too long. Do
+# not expand it, use temp file instead and feed it to xargs.
+##cmd_ar        = $(AR) $(ARFLAGS) $@ $(call objects_with_syms,,$^)
+define NL
+
+
+endef
+
+cmd_ar          = rm -f $@.list $(NL)$(foreach f,$(call objects_with_syms,,$^),@echo $(f) >> $@.list $(NL)) @cat $@.list|xargs $(AR) $(ARFLAGS) $@
+
 
 define do_ln
 	@$(disp_ln)
