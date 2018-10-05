@@ -32,11 +32,11 @@
    References to symbols in sharable libraries can be resolved by either
    an ELF sharable library or a linux style of shared library. */
 
-#error Not even close to be ready
-
 #include "ldso.h"
 
 #if defined(USE_TLS) && USE_TLS
+#error Not even close to be ready
+
 #include "dl-tls.h"
 #include "tlsdeschtab.h"
 #endif
@@ -202,6 +202,12 @@ _dl_do_reloc (struct elf_resolve *tpnt, struct r_scope_elem *scope,
 #endif
 
 	switch (reloc_type) {
+		case R_K1_NONE:
+			break;
+
+#if defined USE_TLS && USE_TLS
+#error Not even close to be ready
+#endif
 		default:
 			return -1; /*call _dl_exit(1) */
 	}
@@ -237,6 +243,14 @@ _dl_do_lazy_reloc (struct elf_resolve *tpnt, struct r_scope_elem *scope,
 #endif
 
 	switch (reloc_type) {
+		case R_K1_NONE:
+			break;
+		case R_K1_JMP_SLOT64:
+			*reloc_addr += tpnt->loadaddr;
+			break;
+#if defined USE_TLS && USE_TLS
+#error Not even close to be ready
+#endif
 		default:
 			return -1; /*call _dl_exit(1) */
 	}
