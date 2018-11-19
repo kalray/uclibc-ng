@@ -34,9 +34,9 @@
 
 ENTRY (__clone)
 	/* Check fn and stack to be non-null */
-	cb.deqz $r1? clone_einval_error
+	cb.deqz $r1? L(clone_einval_error)
 	;;
-	cb.deqz $r0? clone_einval_error
+	cb.deqz $r0? L(clone_einval_error)
 	;;
 	/* Save args ($r3) on child stack */
 	sd -16[$r1] = $r3
@@ -55,10 +55,10 @@ ENTRY (__clone)
 	scall SYS_ify(clone)
 	;;
 	/* If 0, then we are the child */
-	cb.deqz $r0, child_start
+	cb.deqz $r0, L(child_start)
 	;;
 	/* Else we are the parent, and we need to check for errors */
-	cb.dltz $r0, clone_error
+	cb.dltz $r0, L(clone_error)
 	;;
 	/* No error ! Yeepa ! */
 	ret
