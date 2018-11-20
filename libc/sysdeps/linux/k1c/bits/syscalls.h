@@ -15,24 +15,41 @@
 #ifndef __ASSEMBLER__
 
 #define INTERNAL_SYSCALL_NCS(name, err, nr, args...)                    \
-        ({                                                              \
-		register long _a1 __asm__("r0");			\
+ 	({									\
+		register long _ret __asm__("r0");			\
 		unsigned long _scno = name;				\
-                LOAD_ARGS_##nr (args);                                  \
-                __asm__ __volatile__("scall %[r_scno]"			\
-                              : "=r" (_a1)                              \
-                              : [r_scno] "r" (_scno) ASM_ARGS_##nr     \
-                              : "cc", "memory");                	\
-                _a1;                                                    \
-        })
+		LOAD_ARGS_##nr (args)					\
+		__asm__ __volatile__("scall %[r_scno]"			\
+				     : "=r" (_ret)			\
+				     : [r_scno] "ir" (_scno) ASM_ARGS_##nr \
+				     : ASM_CLOBBER_##nr);		\
+		_ret;							\
+	})
 
-#define LOAD_ARGS_0() do { } while(0)
+/* Mark all arguments registers as per ABI in the range r1-r5 as
+   clobbered when they are not used for the invocation of the scall */
+#define ASM_CLOBBER_6 "cc", "memory",					\
+    "r6", "r7", "r8", "r9", "r10", "r11", /* unused argument registers */ \
+    "r15", /* struct pointer */						\
+    "r16", "r17", /* veneer registers */				\
+    "r32", "r33", "r34", "r35", "r36", "r37", "r38", "r39", /* 32->63 are caller-saved */ \
+    "r40", "r41", "r42", "r43", "r44", "r45", "r46", "r47",		\
+    "r48", "r49", "r50", "r51", "r52", "r53", "r54", "r55",		\
+    "r56", "r57", "r58", "r59", "r60", "r61", "r62", "r63"
+#define ASM_CLOBBER_5 "r5", ASM_CLOBBER_6
+#define ASM_CLOBBER_4 "r4", ASM_CLOBBER_5
+#define ASM_CLOBBER_3 "r3", ASM_CLOBBER_4
+#define ASM_CLOBBER_2 "r2", ASM_CLOBBER_3
+#define ASM_CLOBBER_1 "r1", ASM_CLOBBER_2
+#define ASM_CLOBBER_0 ASM_CLOBBER_1
+
+#define LOAD_ARGS_0()
 #define ASM_ARGS_0
 
 #define LOAD_ARGS_1(a1)                                 \
 	LOAD_ARGS_0();					\
-	_a1  = (long) a1;
-#define ASM_ARGS_1      ASM_ARGS_0, "r"(_a1)
+	_ret  = (long) a1;
+#define ASM_ARGS_1      ASM_ARGS_0, "r"(_ret)
 
 #define LOAD_ARGS_2(a1, a2)                             \
 	LOAD_ARGS_1(a1);				\
