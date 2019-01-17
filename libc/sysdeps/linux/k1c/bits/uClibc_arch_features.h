@@ -10,7 +10,7 @@
 #define __UCLIBC_ABORT_INSTRUCTION__ "errop\n\t;;\n"
 
 /* can your target use syscall6() for mmap ? */
-#undef __UCLIBC_MMAP_HAS_6_ARGS__
+#define __UCLIBC_MMAP_HAS_6_ARGS__
 
 /* does your target align 64bit values in register pairs ? (32bit arches only) */
 #undef __UCLIBC_SYSCALL_ALIGN_64BIT__
