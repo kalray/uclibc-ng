@@ -17,11 +17,11 @@
 #define INTERNAL_SYSCALL_NCS(name, err, nr, args...)                    \
  	({									\
 		register long _ret __asm__("r0");			\
-		unsigned long _scno = name;				\
+		register unsigned long _scno  __asm__("r6") = name;	\
 		LOAD_ARGS_##nr (args)					\
 		__asm__ __volatile__("scall %[r_scno]"			\
 				     : "=r" (_ret)			\
-				     : [r_scno] "ir" (_scno) ASM_ARGS_##nr \
+				     : [r_scno] "r" (_scno) ASM_ARGS_##nr \
 				     : ASM_CLOBBER_##nr);		\
 		_ret;							\
 	})
@@ -29,7 +29,7 @@
 /* Mark all arguments registers as per ABI in the range r1-r5 as
    clobbered when they are not used for the invocation of the scall */
 #define ASM_CLOBBER_6 "cc", "memory",					\
-    "r6", "r7", "r8", "r9", "r10", "r11", /* unused argument registers */ \
+    "r7", "r8", "r9", "r10", "r11", /* unused argument registers */ \
     "r15", /* struct pointer */						\
     "r16", "r17", /* veneer registers */				\
     "r32", "r33", "r34", "r35", "r36", "r37", "r38", "r39", /* 32->63 are caller-saved */ \
