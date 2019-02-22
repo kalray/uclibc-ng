@@ -1,8 +1,16 @@
+/*
+  (C) Copyright 2019 Kalray S.A.
+  This file provides fegetround for the Coolidge processor.
+*/
 
-int
-fegetround(void)
+#include <fenv.h>
+
+int fegetround(void)
 {
-        int offset = __builtin_k1_ctz (_K1_MASK_CS_RM);
-        return ((__builtin_k1_get (_K1_SFR_CS) & _K1_MASK_CS_RM) >> offset);
-}
+  /* Get all $cs flags (exception flags and rounding mode) */
+  fenv_t rm;
+  rm = __builtin_k1_get(K1_SFR_CS);
 
+  /* Return the rounding mode */
+  return rm & FE_RND_MASK;
+}
