@@ -38,17 +38,17 @@ ENTRY (__clone)
 	;;
 	cb.deqz $r0? L(clone_einval_error)
 	;;
+	/* Save fn ($r0) on child stack */
+	sd -8[$r1] = $r0
+	/* Set clone_flags */
+	copyd $r0 = $r2
+	;;
 	/* Save args ($r3) on child stack */
 	sd -16[$r1] = $r3
 	/* Set parent_tidptr */
 	copyd $r2 = $r4
 	/* Set child_tidptr */
 	copyd $r3 = $r6
-	;;
-	/* Save fn ($r0) on child stack */
-	sd -8[$r1] = $r0
-	/* Set clone_flags */
-	copyd $r0 = $r2
 	/* Set tls */ 
 	copyd $r4 = $r5
 	;;
@@ -64,13 +64,13 @@ ENTRY (__clone)
 	ret
 	;;
 L(child_start):
-	addd $sp = $sp, 16
+	addd $sp = $sp, -16
 	;;
 	/* get fn from stack */
-	ld $r1 = 0[$sp]
+	ld $r1 = 8[$sp]
 	;;
 	/* Get args from stack */
-	ld $r0 = 8[$sp]
+	ld $r0 = 0[$sp]
 	icall $r1
 	;;
 	scall SYS_ify(exit)
