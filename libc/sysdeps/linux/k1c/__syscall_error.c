@@ -14,6 +14,6 @@
 int __syscall_error(int err_no) attribute_hidden;
 int __syscall_error(int err_no)
 {
-	__set_errno(err_no);
+	__set_errno(-err_no);
 	return -1;
 }
