@@ -43,6 +43,8 @@
 
 extern int _dl_linux_resolve(void);
 
+/* Uncomment when some relocs will be handled lazily */
+#if 0
 unsigned long _dl_linux_resolver(struct elf_resolve *tpnt, int reloc_entry)
 {
 	ELF_RELOC *this_reloc;
@@ -87,6 +89,7 @@ unsigned long _dl_linux_resolver(struct elf_resolve *tpnt, int reloc_entry)
 #endif
 	return (unsigned long)new_addr;
 }
+#endif
 
 static int
 _dl_parse(struct elf_resolve *tpnt, struct r_scope_elem *scope,
@@ -204,6 +207,17 @@ _dl_do_reloc (struct elf_resolve *tpnt, struct r_scope_elem *scope,
 	switch (reloc_type) {
 		case R_K1_NONE:
 			break;
+		case R_K1_GLOB_DAT:
+		case R_K1_64:
+		case R_K1_JMP_SLOT:
+			*reloc_addr = symbol_addr + rpnt->r_addend;
+			break;
+		case R_K1_COPY:
+			if (symbol_addr) {
+				_dl_memcpy((char *)reloc_addr, (char *)symbol_addr,
+							sym_ref.sym->st_size);
+			}
+			break;
 
 #if defined USE_TLS && USE_TLS
 #error Not even close to be ready
@@ -222,6 +236,8 @@ _dl_do_reloc (struct elf_resolve *tpnt, struct r_scope_elem *scope,
 	return 0;
 }
 
+/* uncomment when PLT relocs will be handled lazily */
+#if 0
 static int
 _dl_do_lazy_reloc (struct elf_resolve *tpnt, struct r_scope_elem *scope,
 		   ELF_RELOC *rpnt, ElfW(Sym) *symtab, char *strtab)
@@ -264,11 +280,12 @@ _dl_do_lazy_reloc (struct elf_resolve *tpnt, struct r_scope_elem *scope,
 
 	return 0;
 }
+#endif
 
 void _dl_parse_lazy_relocation_information(struct dyn_elf *rpnt,
 	unsigned long rel_addr, unsigned long rel_size)
 {
-	(void)_dl_parse(rpnt->dyn, NULL, rel_addr, rel_size, _dl_do_lazy_reloc);
+	(void)_dl_parse(rpnt->dyn, &_dl_loaded_modules->symbol_scope, rel_addr, rel_size, _dl_do_reloc);
 }
 
 int _dl_parse_relocation_information(struct dyn_elf *rpnt,
