@@ -45,13 +45,15 @@
 /* Used for error messages */
 #define ELF_TARGET "k1c"
 
+#define ARCH_NEEDS_BOOTSTRAP_RELOCS
+
 struct elf_resolve;
 unsigned long _dl_linux_resolver(struct elf_resolve * tpnt, int reloc_entry);
 
 #define elf_machine_type_class(type)			\
-  ((((type) == R_K1_JMP_SLOT64)				\
+  ((((type) == R_K1_JMP_SLOT)				\
     * ELF_RTYPE_CLASS_PLT)				\
-   | (((type) == R_K1_COPY64) * ELF_RTYPE_CLASS_COPY))
+   | (((type) == R_K1_COPY) * ELF_RTYPE_CLASS_COPY))
 
 /* Return the link-time address of _DYNAMIC.  Conveniently, this is the
    first element of the GOT. */
@@ -59,7 +61,11 @@ extern const ElfW(Addr) _GLOBAL_OFFSET_TABLE_[] attribute_hidden;
 static __always_inline ElfW(Addr) __attribute__ ((unused))
 elf_machine_dynamic (void)
 {
-  return _GLOBAL_OFFSET_TABLE_[0];
+  unsigned long *ptr;
+  __asm__("\n"
+	"pcrel %0 = @gotaddr()\n"
+	";;\n" : "=r"(ptr) :: );
+  return *ptr;
 }
 
 /* Return the run-time load address of the shared object.  */

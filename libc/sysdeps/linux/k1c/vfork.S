@@ -36,9 +36,7 @@ ENTRY(__vfork)
 	ret
 	;;
 L(err):
-	make $r1 = __syscall_error
-	;;
-	igoto $r1
+	goto __syscall_error
 	;;
 	/* Never return */
 	errop

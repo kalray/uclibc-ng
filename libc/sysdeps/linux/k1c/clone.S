@@ -84,9 +84,7 @@ L(clone_einval_error):
 L(clone_error):
 	/* goto __syscall_error but do not use call or $ra will be
 	 * destroyed */
-	make $r1 = __syscall_error
-	;;
-	igoto $r1
+	goto __syscall_error
 	;;
 	/* We will not return here but to clone caller
 	 * (stored in $ra) */
