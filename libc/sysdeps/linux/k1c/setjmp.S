@@ -50,11 +50,10 @@ ENTRY(__sigsetjmp)
 	/* Save $cs and $ra */
 	sq JMPBUF_RA_CS_OFFSET[$r0] = $r40r41
 	get $r34 = $ls
-	make $r42 = __sigjmp_save
 	;;
 	/* Save $lc, $le and $ls */
 	so JMPBUF_LC_LE_LS_OFFSET[$r0] = $r32r33r34r35
-	igoto $r42
+	goto __sigjmp_save
 	;;
 END(__sigsetjmp)
 libc_hidden_def(__sigsetjmp)

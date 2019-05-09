@@ -12,8 +12,6 @@ config FORCE_OPTIONS_FOR_ARCH
 	default y
 	select ARCH_LITTLE_ENDIAN
         select ARCH_HAS_MMU
-	select ARCH_HAS_NO_SHARED
-	select ARCH_HAS_NO_LDSO
 	select UCLIBC_HAS_FPU
 	select UCLIBC_HAS_FENV
 	select DO_C99_MATH
