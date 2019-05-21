@@ -43,8 +43,8 @@ ENTRY(__sigsetjmp)
 	so (JMPBUF_REGS_OFFSET)[$r0] = $r36r37r38r39
 	get $r32 = $lc
 	;;
-	/* Save r24r25r26r27 */
-	so (JMPBUF_REGS_OFFSET + 3 * QUAD_REG_SIZE) [$r0] = $r24r25r26r27
+	/* Save r28r29r30r31 */
+	so (JMPBUF_REGS_OFFSET + 3 * QUAD_REG_SIZE) [$r0] = $r28r29r30r31
 	get $r33 = $le
 	;;
 	/* Save $cs and $ra */
