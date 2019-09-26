@@ -35,8 +35,6 @@
 #include "ldso.h"
 
 #if defined(USE_TLS) && USE_TLS
-#error Not even close to be ready
-
 #include "dl-tls.h"
 #include "tlsdeschtab.h"
 #endif
@@ -220,7 +218,16 @@ _dl_do_reloc (struct elf_resolve *tpnt, struct r_scope_elem *scope,
 			break;
 
 #if defined USE_TLS && USE_TLS
-#error Not even close to be ready
+		case R_K1_64_TPOFF:
+			CHECK_STATIC_TLS ((struct link_map *) tls_tpnt);
+			*reloc_addr = tls_tpnt->l_tls_offset + symbol_addr + rpnt->r_addend - TLS_TCB_SIZE;
+			break;
+		case R_K1_64_DTPMOD:
+			*reloc_addr = tls_tpnt->l_tls_modid;
+			break;
+		case R_K1_64_DTPOFF:
+			*reloc_addr = symbol_addr;
+			break;
 #endif
 		default:
 			return -1; /*call _dl_exit(1) */
