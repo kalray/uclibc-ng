@@ -47,11 +47,15 @@ C_SYMBOL_NAME(_start):
 	make $r0 = -16
 	/* $r0 contains rtld_fini when run by dynamic loader */
 	copyd $r5 = $r0
+	/* prepare __uClibc_main arg */
+	make $r3 = _init
 	;;
 	/* Align stack */
 	andd $sp = $sp, $r0
 	make $r8 = 0
 	make $fp = 0;
+	/* prepare __uClibc_main arg */
+	make $r4 = _fini
 	;;
 	/* Setup stack_end for __uClibc_main */
 	copyd $r6 = $sp
@@ -59,8 +63,6 @@ C_SYMBOL_NAME(_start):
 	set $cs = $r8
 	/* FIXME: clear frame pointer when format has been clarified */
 	;;
-	make $r3 = _init
-	make $r4 = _fini
 	make $r0 = main
 	goto __uClibc_main
 	;;
