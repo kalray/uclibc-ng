@@ -36,6 +36,8 @@ __BEGIN_DECLS
 
 /* Type for a general-purpose register.  */
 typedef unsigned long elf_greg_t;
+/* No FP registers for k1c. */
+typedef struct {} elf_fpregset_t;
 
 /* And the whole bunch of them.  We could have used `struct
    pt_regs' directly in the typedef, but tradition says that
@@ -43,9 +45,6 @@ typedef unsigned long elf_greg_t;
    semantics, so leave it that way.  */
 #define ELF_NGREG (sizeof (struct user_regs_struct) / sizeof(elf_greg_t))
 typedef elf_greg_t elf_gregset_t[ELF_NGREG];
-
-/* Register set for the floating-point registers.  */
-typedef struct user_fpsimd_struct elf_fpregset_t;
 
 /* Signal info.  */
 struct elf_siginfo
