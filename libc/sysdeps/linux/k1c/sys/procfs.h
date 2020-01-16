@@ -64,6 +64,9 @@ struct elf_siginfo
 
 struct elf_prstatus
   {
+    short int pr_cursig;		/* Current signal.  */
+    __pid_t pr_pid;
+    elf_gregset_t pr_reg;		/* GP registers.  */
   };
 
 
@@ -71,6 +74,8 @@ struct elf_prstatus
 
 struct elf_prpsinfo
   {
+    char pr_fname[16];			/* Filename of executable.  */
+    char pr_psargs[ELF_PRARGSZ];	/* Initial part of arg list.  */
   };
 
 /* The rest of this file provides the types for emulation of the
