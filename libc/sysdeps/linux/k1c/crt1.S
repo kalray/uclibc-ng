@@ -42,28 +42,43 @@ C_SYMBOL_NAME(_start):
 	ld $r1 = 0[$sp]
 	/* Load argv addr from stack */
 	addd $r2 = $sp, 0x8
+#ifdef __PIC__
+	make $r7 = @gotaddr()
+#endif
 	;;
 	/* align sp to 16-byte boundary */
 	make $r0 = -16
 	/* $r0 contains rtld_fini when run by dynamic loader */
 	copyd $r5 = $r0
 	/* prepare __uClibc_main arg */
+#ifndef __PIC__
 	make $r3 = _init
+	make $r4 = _fini
+#endif
 	;;
 	/* Align stack */
 	andd $sp = $sp, $r0
 	make $r8 = 0
-	make $fp = 0;
+	make $fp = 0
 	/* prepare __uClibc_main arg */
-	make $r4 = _fini
+#ifdef __PIC__
+	ld $r3 = @got(_init)[$r7]
+#endif
 	;;
 	/* Setup stack_end for __uClibc_main */
 	copyd $r6 = $sp
 	/* Clear compute status */
 	set $cs = $r8
+#ifdef __PIC__
+	ld $r4 = @got(_fini)[$r7]
+#endif
 	/* FIXME: clear frame pointer when format has been clarified */
 	;;
+#ifdef __PIC__
+	ld $r0 = @got(main)[$r7]
+#else
 	make $r0 = main
+#endif
 	goto __uClibc_main
 	;;
 	/* We should never return ! */
