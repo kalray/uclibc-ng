@@ -43,7 +43,7 @@ C_SYMBOL_NAME(_start):
 	/* Load argv addr from stack */
 	addd $r2 = $sp, 0x8
 #ifdef __PIC__
-	make $r7 = @gotaddr()
+	pcrel $r7 = @gotaddr()
 #endif
 	;;
 	/* align sp to 16-byte boundary */
