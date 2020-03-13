@@ -29,13 +29,13 @@ ENTRY(__sigsetjmp)
 	/* Save r20r21r22r23 */
 	so (JMPBUF_REGS_OFFSET + QUAD_REG_SIZE)[$r0] = $r20r21r22r23
 	get $r40 = $ra
-	copyd $r36 = $sp
-	copyd $r37 = $r14
 	;;
 	/* Save r24r25r26r27 */
 	so (JMPBUF_REGS_OFFSET + 2 * QUAD_REG_SIZE) [$r0] = $r24r25r26r27
 	get $r41 = $cs
-	/* Store $ra and cs*/
+	;;
+	copyd $r36 = $sp
+	copyd $r37 = $r14
 	copyd $r38 = $r18
 	copyd $r39 = $r19
 	;;
