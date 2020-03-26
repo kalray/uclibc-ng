@@ -51,7 +51,8 @@ struct elf_resolve;
 unsigned long _dl_linux_resolver(struct elf_resolve * tpnt, int reloc_entry);
 
 #define elf_machine_type_class(type)			\
-  ((((type) == R_K1_JMP_SLOT)				\
+  ((((type) == R_K1_JMP_SLOT || (type) == R_K1_64_DTPMOD || (type) == R_K1_64_DTPOFF \
+    || (type) == R_K1_64_TPOFF)				\
     * ELF_RTYPE_CLASS_PLT)				\
    | (((type) == R_K1_COPY) * ELF_RTYPE_CLASS_COPY))
 
