@@ -28,7 +28,7 @@ choice
 	default TARGET_hppa if DESIRED_TARGET_ARCH = "hppa"
 	default TARGET_i386 if DESIRED_TARGET_ARCH = "i386"
 	default TARGET_ia64 if DESIRED_TARGET_ARCH = "ia64"
-	default TARGET_k1c if DESIRED_TARGET_ARCH = "k1c"
+	default TARGET_kvx if DESIRED_TARGET_ARCH = "kvx"
 	default TARGET_lm32 if DESIRED_TARGET_ARCH = "lm32"
 	default TARGET_m68k if DESIRED_TARGET_ARCH = "m68k"
 	default TARGET_metag if DESIRED_TARGET_ARCH = "metag"
@@ -92,8 +92,8 @@ config TARGET_i386
 config TARGET_ia64
 	bool "ia64"
 
-config TARGET_k1c
-	bool "k1c"
+config TARGET_kvx
+	bool "kvx"
 
 config TARGET_lm32
 	bool "lm32"
@@ -196,8 +196,8 @@ if TARGET_ia64
 source "extra/Configs/Config.ia64"
 endif
 
-if TARGET_k1c
-source "extra/Configs/Config.k1c"
+if TARGET_kvx
+source "extra/Configs/Config.kvx"
 endif
 
 if TARGET_lm32

@@ -463,8 +463,8 @@ ifeq ($(TARGET_ARCH),csky)
 	CPU_CFLAGS-$(ARCH_BIG_ENDIAN)		+= -mbig-endian
 endif
 
-ifeq ($(TARGET_ARCH),k1c)
-	CPU_CFLAGS-$(CONFIG_K1C) += -march=k1c
+ifeq ($(TARGET_ARCH),kvx)
+	CPU_CFLAGS-$(CONFIG_KVX) += -march=kvx
 endif
 
 ifeq ($(TARGET_ARCH),m68k)
