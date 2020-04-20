@@ -61,48 +61,65 @@ typedef uintmax_t uatomic_max_t;
 #endif
 
 /*
- * Atomic compare and exchange.  Compare OLD with MEM, if identical,
- * store NEW in MEM.  Return the initial value in MEM.  Success is
- * indicated by comparing RETURN with OLD.
+ * On kvx, we have a boolean compare and swap which means that the operation
+ * returns only the success of operation.
+ * If operation succeeds, this is simple, we just need to return the provided
+ * old value. However, if it fails, we need to load the value to return it for
+ * the caller. If the loaded value is different from the "old" provided by the
+ * caller, we can return it since it will mean it failed.
+ * However, if for some reason the value we read is equal to the old value
+ * provided by the caller, we can't simply return it or the caller will think it
+ * succeeded. So if the value we read is the same as the "old" provided by
+ * the caller, we try again until either we succeed or we fail with a different
+ * value than the provided one.
  */
-#define __cmpxchg(ptr, old, newval, op_suffix)				\
+#define __cmpxchg(ptr, old, new, op_suffix, load_suffix)		\
 ({									\
-	__typeof((ptr)) __cxc__ptr = (ptr);					\
-	register unsigned long __cxc__rn __asm__("r62") = (unsigned long) (newval);	\
-	register unsigned long __cxc__ro __asm__("r63") = (unsigned long) (old);	\
-	do {								\
-		__asm__ __volatile__ (					\
-			"acswap" #op_suffix " 0[%[rPtr]], $r62r63\n"	\
-			: "+r" (__cxc__rn), "+r" (__cxc__ro)			\
-			: [rPtr] "r" (__cxc__ptr)				\
-			: "memory");					\
-		/* Success */						\
-		if (__cxc__rn) {						\
-			__cxc__ro = (unsigned long) (old);			\
-			break;						\
-		}							\
-		/* We failed, read value  */				\
-		__cxc__ro = (unsigned long) *(__cxc__ptr);			\
-		if (__cxc__ro != (unsigned long) (old))			\
-			break;						\
-		/* __cxc__rn has been cloberred by cmpxch result */		\
-		__cxc__rn = (unsigned long) (newval);				\
-	} while (1);							\
-	(__cxc__ro);								\
+	register unsigned long __rn __asm__("r62");			\
+	register unsigned long __ro __asm__("r63");			\
+	__asm__ __volatile__ (						\
+		/* Fence to guarantee previous store to be committed */	\
+		"fence\n"						\
+		/* Init "expect" with previous value */			\
+		"copyd $r63 = %[rOld]\n"				\
+		";;\n"							\
+		"1:\n"							\
+		/* Init "update" value with new */			\
+		"copyd $r62 = %[rNew]\n"				\
+		";;\n"							\
+		"acswap" #op_suffix " 0[%[rPtr]], $r62r63\n"		\
+		";;\n"							\
+		/* if acswap succeed, simply return */			\
+		"cb.dnez $r62? 2f\n"					\
+		";;\n"							\
+		/* We failed, load old value */				\
+		"l"  #op_suffix  #load_suffix" $r63 = 0[%[rPtr]]\n"	\
+		";;\n"							\
+		/* Check if equal to "old" one */			\
+		"compd.ne $r62 = $r63, %[rOld]\n"			\
+		";;\n"							\
+		/* If different from "old", return it to caller */	\
+		"cb.deqz $r62? 1b\n"					\
+		";;\n"							\
+		"2:\n"							\
+		: "+r" (__rn), "+r" (__ro)				\
+		: [rPtr] "r" (ptr), [rOld] "r" (old), [rNew] "r" (new)	\
+		: "memory");						\
+	(__ro);								\
 })
 
 #define cmpxchg(ptr, o, n)						\
 ({									\
-	unsigned long __cmpxchg__ret;						\
+	unsigned long __cmpxchg__ret;					\
 	switch (sizeof(*(ptr))) {					\
 	case 4:								\
-		__cmpxchg__ret = __cmpxchg((ptr), (o), (n), w);			\
+		__cmpxchg__ret = __cmpxchg((ptr), (o), (n), w, s);	\
 		break;							\
 	case 8:								\
-		__cmpxchg__ret = __cmpxchg((ptr), (o), (n), d);			\
+		__cmpxchg__ret = __cmpxchg((ptr), (o), (n), d, );	\
 		break;							\
 	}								\
-	(__typeof(*(ptr))) (__cmpxchg__ret);					\
+	(__typeof(*(ptr))) (__cmpxchg__ret);				\
 })
 
 #define atomic_compare_and_exchange_val_acq(mem, newval, oldval)	\
