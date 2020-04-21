@@ -46,8 +46,8 @@ C_SYMBOL_NAME(_start):
 	pcrel $r7 = @gotaddr()
 #endif
 	;;
-	/* align sp to 16-byte boundary */
-	make $r0 = -16
+	/* align sp to 32-byte boundary */
+	make $r0 = -32
 	/* $r0 contains rtld_fini when run by dynamic loader */
 	copyd $r5 = $r0
 	/* prepare __uClibc_main arg */
