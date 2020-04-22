@@ -12,11 +12,10 @@
 	.type	 _init,@function
 _init:
 	addd $sp = $sp, -32
-	get $r0 = $ra
+	get $r15 = $ra
 	;;
-	sd 0[$sp] = $r0
-	;;
-	sd 8[$sp] = $r14
+	sq 0[$sp] = $r14r15
+	copyd $fp = $sp
 	;;
 
 	.section .fini
@@ -25,9 +24,8 @@ _init:
 	.type	 _fini,@function
 _fini:
 	addd $sp = $sp, -32
-	get $r0 = $ra
+	get $r15 = $ra
 	;;
-	sd 0[$sp] = $r0
-	;;
-	sd 8[$sp] = $r14
+	sq 0[$sp] = $r14r15
+	copyd $fp = $sp
 	;;

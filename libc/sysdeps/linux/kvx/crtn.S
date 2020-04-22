@@ -11,10 +11,9 @@
 	.global	_init
 	.type	 _init,@function
 	# EPILOGUE
-	ld $r0 = 0[$sp]
+	lq $r14r15 = 0[$sp]
 	;;
-	ld $r14 = 8[$sp]
-	set $ra = $r0
+	set $ra = $r15
 	addd $sp = $sp, 32
 	;;
 	ret
@@ -25,10 +24,9 @@
 	.global	_fini
 	.type	 _fini,@function
 	# EPILOGUE
-	ld $r0 = 0[$sp]
+	lq $r14r15 = 0[$sp]
 	;;
-	ld $r14 = 8[$sp]
-	set $ra = $r0
+	set $ra = $r15
 	addd $sp = $sp, 32
 	;;
 	ret
