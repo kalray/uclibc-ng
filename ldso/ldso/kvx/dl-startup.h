@@ -37,7 +37,7 @@
  *	auxvt[0...N]   Auxiliary Vector Table elements (mixed types)
  *
  * We should call _dl_start($sp) (the argument should point to the previously
- * described memory layour).
+ * described memory layout).
  *
  * Next we should skip N arguments (N == _dl_skip_args).
  * Those correspond to the arguments which are consumed by the dynamic loader
@@ -45,7 +45,7 @@
  * __LDSO_STANDALONE_SUPPORT__ is defined.
  *
  * We eventually end up calling the main executable's _start (from ctr1.S).
- * The address if this _start is returned by _dl_start (in $r0).
+ * The address of this _start is returned by _dl_start (in $r0).
  *
  * We should call this with one argument (in $r0): the address of _dl_fini()
  */

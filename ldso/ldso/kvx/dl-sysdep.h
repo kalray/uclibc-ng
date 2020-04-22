@@ -25,7 +25,7 @@
    License along with the GNU C Library; if not, see
    <http://www.gnu.org/licenses/>.  */
 
-/* Define this if the system uses RELOCA.  */
+/* Defines that this system uses RELOCA.  */
 #define ELF_USES_RELOCA
 
 #include <elf.h>

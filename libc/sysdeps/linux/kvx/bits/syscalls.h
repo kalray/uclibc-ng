@@ -26,7 +26,7 @@
 		_ret;							\
 	})
 
-/* Mark all arguments registers as per ABI in the range r1-r5 as
+/* Mark all argument registers as per ABI in the range r1-r5 as
    clobbered when they are not used for the invocation of the scall */
 #define ASM_CLOBBER_6 "cc", "memory",					\
     "r7", "r8", "r9", "r10", "r11", /* unused argument registers */ \

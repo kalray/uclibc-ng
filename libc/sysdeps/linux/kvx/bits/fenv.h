@@ -22,9 +22,9 @@
 /* $cs register number for use in kvx builtins */
 #define KVX_SFR_CS 4
 
-/* Each core of the Coolidge processor have a coprocessor. They share
+/* Each core of the Coolidge processor has a coprocessor. They share
    the CS register but have distinct bit-fields for their
-   floating-point environment.  This implementation synchronizes them
+   floating-point environment. This implementation synchronizes them
    in such a way that they cannot be managed separately. */
 
 /* Compute Status ($cs) register contains the following bit-fields for

@@ -89,7 +89,7 @@ typedef uintmax_t uatomic_max_t;
 		";;\n"							\
 		"acswap" #op_suffix " 0[%[rPtr]], $r62r63\n"		\
 		";;\n"							\
-		/* if acswap succeed, simply return */			\
+		/* if acswap succeeds, simply return */			\
 		"cb.dnez $r62? 2f\n"					\
 		";;\n"							\
 		/* We failed, load old value */				\

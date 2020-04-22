@@ -6,7 +6,6 @@
 #define _BITS_UCLIBC_ARCH_FEATURES_H
 
 /* instruction used when calling abort() to kill yourself */
-/*#define __UCLIBC_ABORT_INSTRUCTION__ "asm instruction"*/
 #define __UCLIBC_ABORT_INSTRUCTION__ "errop\n\t;;\n"
 
 /* can your target use syscall6() for mmap ? */

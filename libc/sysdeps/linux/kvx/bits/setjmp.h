@@ -15,7 +15,7 @@
 
 #define SIZE_OF_REG 8
 
-/* Size of a quad reg (can't use sizeof(uint64_t) sine it will be in asm */
+/* Size of a quad reg (can't use sizeof(uint64_t) since it will be in asm */
 #define QUAD_REG_SIZE (4 * SIZE_OF_REG)
 
 

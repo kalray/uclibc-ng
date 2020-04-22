@@ -30,7 +30,7 @@ ENTRY(__vfork)
 	;;
 	scall SYS_ify(clone)
 	;;
-	/* If PID < 0 then its an error, else, simply return */
+	/* If PID < 0 then it's an error, else, simply return */
 	cb.dltz $r0 ? err
 	;;
 	ret
