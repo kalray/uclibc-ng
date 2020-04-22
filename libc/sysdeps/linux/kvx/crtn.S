@@ -15,7 +15,7 @@
 	;;
 	ld $r14 = 8[$sp]
 	set $ra = $r0
-	addd $sp = $sp, 16
+	addd $sp = $sp, 32
 	;;
 	ret
 	;;
@@ -29,7 +29,7 @@
 	;;
 	ld $r14 = 8[$sp]
 	set $ra = $r0
-	addd $sp = $sp, 16
+	addd $sp = $sp, 32
 	;;
 	ret
 	;;

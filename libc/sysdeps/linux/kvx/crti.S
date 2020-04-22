@@ -11,7 +11,7 @@
 	.global	_init
 	.type	 _init,@function
 _init:
-	addd $sp = $sp, -16
+	addd $sp = $sp, -32
 	get $r0 = $ra
 	;;
 	sd 0[$sp] = $r0
@@ -24,7 +24,7 @@ _init:
 	.global	_fini
 	.type	 _fini,@function
 _fini:
-	addd $sp = $sp, -16
+	addd $sp = $sp, -32
 	get $r0 = $ra
 	;;
 	sd 0[$sp] = $r0
