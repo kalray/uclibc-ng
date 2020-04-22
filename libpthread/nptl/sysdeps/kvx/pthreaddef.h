@@ -10,7 +10,7 @@
 #define ARCH_STACK_DEFAULT_SIZE	(2 * 1024 * 1024)
 
 /* Required stack pointer alignment at beginning.  */
-#define STACK_ALIGN 16
+#define STACK_ALIGN 32
 
 /* Minimal stack size after allocating thread descriptor and guard size.  */
 #define MINIMAL_REST_STACK 2048

@@ -55,6 +55,8 @@ __asm__("\
 .type _start, %function					\n\
 _start:							\n\
 	copyd $r0 = $sp					\n\
+	copyd $r18 = $sp				\n\
+	andd $sp = $sp, -32				\n\
 	call _dl_start					\n\
 	;;						\n\
 .globl _dl_start_user					\n\
@@ -62,6 +64,7 @@ _start:							\n\
 _dl_start_user:						\n\
 	pcrel $r1 = @gotaddr() 				\n\
 	copyd $r5 = $r0					\n\
+	copyd $sp = $r18				\n\
 	;;						\n\
 	ld $r2 = @gotoff(_dl_skip_args)[$r1]		\n\
 	addd $r0 = $r1, @gotoff(_dl_fini) 		\n\

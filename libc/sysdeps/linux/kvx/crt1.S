@@ -46,8 +46,6 @@ C_SYMBOL_NAME(_start):
 	pcrel $r7 = @gotaddr()
 #endif
 	;;
-	/* align sp to 32-byte boundary */
-	make $r0 = -32
 	/* $r0 contains rtld_fini when run by dynamic loader */
 	copyd $r5 = $r0
 	/* prepare __uClibc_main arg */
@@ -56,8 +54,8 @@ C_SYMBOL_NAME(_start):
 	make $r4 = _fini
 #endif
 	;;
-	/* Align stack */
-	andd $sp = $sp, $r0
+	/* Align stack to 32-byte boundary */
+	andd $sp = $sp, -32
 	make $r8 = 0
 	make $fp = 0
 	/* prepare __uClibc_main arg */
