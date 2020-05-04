@@ -35,16 +35,20 @@
 ENTRY (__clone)
 	/* Check fn and stack to be non-null */
 	cb.deqz $r1? L(clone_einval_error)
+	/* Align child stack first */
+	andd $r1 = $r1, -32
 	;;
 	cb.deqz $r0? L(clone_einval_error)
+	/* Prepare space for child arguments on stack and stay aligned */
+	addd $r1 = $r1, -32
 	;;
 	/* Save fn ($r0) on child stack */
-	sd -8[$r1] = $r0
+	sd 0[$r1] = $r0
 	/* Set clone_flags */
 	copyd $r0 = $r2
 	;;
 	/* Save args ($r3) on child stack */
-	sd -16[$r1] = $r3
+	sd 8[$r1] = $r3
 	/* Set parent_tidptr */
 	copyd $r2 = $r4
 	/* Set child_tidptr */
@@ -64,13 +68,13 @@ ENTRY (__clone)
 	ret
 	;;
 L(child_start):
-	addd $sp = $sp, -16
-	;;
 	/* get fn from stack */
-	ld $r1 = 8[$sp]
+	ld $r1 = 0[$sp]
 	;;
 	/* Get args from stack */
-	ld $r0 = 0[$sp]
+	ld $r0 = 8[$sp]
+	addd $sp = $sp, 32
+	;;
 	icall $r1
 	;;
 	scall SYS_ify(exit)
