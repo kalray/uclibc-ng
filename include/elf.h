@@ -273,10 +273,10 @@ typedef struct
 #define EM_ARCV2	195		/* ARCv2 Cores */
 #define EM_RISCV        243     	/* RISC-V */
 #define EM_CSKY		252		/* C-SKY Cores */
-#define EM_KVX 0x1337
+#define EM_KVX		256		/* Kalray VLIW core of the MPPA processor family */
 
 /* NEXT FREE NUMBER: Increment this after adding your official arch number */
-#define EM_NUM		253
+#define EM_NUM		257
 
 /* If it is necessary to assign new unofficial EM_* values, please pick large
    random numbers (0x8523, 0xa7f2, etc.) to minimize the chances of collision
