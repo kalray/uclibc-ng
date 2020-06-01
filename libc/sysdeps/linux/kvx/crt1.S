@@ -70,7 +70,6 @@ C_SYMBOL_NAME(_start):
 #ifdef __PIC__
 	ld $r4 = @got(_fini)[$r7]
 #endif
-	/* FIXME: clear frame pointer when format has been clarified */
 	;;
 #ifdef __PIC__
 	ld $r0 = @got(main)[$r7]
