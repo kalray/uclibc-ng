@@ -141,5 +141,6 @@ ENTRY(memset)
 	copyd $r0 = $r3
 	ret
 	;;
+END(memset)
 
 libc_hidden_def(memset)
