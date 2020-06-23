@@ -87,7 +87,7 @@ _dl_start_user:						\n\
 /* Handle relocation of the symbols in the dynamic loader. */
 static __always_inline
 void PERFORM_BOOTSTRAP_RELOC(ELF_RELOC *rpnt, ElfW(Addr) *reloc_addr,
-	ElfW(Addr) symbol_addr, ElfW(Addr) load_addr, ElfW(Addr) *sym)
+	ElfW(Addr) symbol_addr, ElfW(Addr) load_addr, ElfW(Sym) *sym)
 {
 	switch (ELF_R_TYPE(rpnt->r_info)) {
 		case R_KVX_NONE:
