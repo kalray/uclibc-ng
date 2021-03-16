@@ -96,7 +96,7 @@ typedef uintmax_t uatomic_max_t;
 		"l"  #op_suffix  #load_suffix" $r63 = 0[%[rPtr]]\n"	\
 		";;\n"							\
 		/* Check if equal to "old" one */			\
-		"compd.ne $r62 = $r63, %[rOld]\n"			\
+		"comp" #op_suffix ".ne $r62 = $r63, %[rOld]\n"		\
 		";;\n"							\
 		/* If different from "old", return it to caller */	\
 		"cb.deqz $r62? 1b\n"					\
